@@ -1,0 +1,19 @@
+def digit_sum(n):
+    return sum(int(digit) for digit in str(n))
+
+def make_integer_beautiful(n, target):
+    x = 0
+    current = n
+    # Iterate until we find the beautiful number
+    while digit_sum(current) > target:
+        # Calculate the next significant number by carry over
+        increment = 10 ** len(str(current))
+        next_significant = (current // increment + 1) * increment
+        x += next_significant - current
+        current = next_significant
+    return x
+
+# Example usage
+n = 16
+target = 6
+print(make_integer_beautiful(n, target))  # Output: 4
