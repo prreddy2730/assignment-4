@@ -1,0 +1,30 @@
+def second_greater_element(nums):
+    n = len(nums)
+    result = [-1] * n  # Initialize the result array with -1
+    stack1 = []  # Stack to keep track of first greater elements
+    stack2 = []  # Stack to keep track of second greater elements
+    
+    for i in range(n):
+        # Process elements in stack2 which are less than current element
+        while stack2 and nums[stack2[-1]] < nums[i]:
+            index = stack2.pop()
+            result[index] = nums[i]
+        
+        # Process elements in stack1 which are less than current element
+        temp_stack = []
+        while stack1 and nums[stack1[-1]] < nums[i]:
+            index = stack1.pop()
+            temp_stack.append(index)
+        
+        # Move elements to stack2 for finding second greater element
+        while temp_stack:
+            stack2.append(temp_stack.pop())
+        
+        # Add current element to stack1
+        stack1.append(i)
+    
+    return result
+
+# Example usage
+nums = [1, 2, 4, 3]
+print(second_greater_element(nums))  # Output: [4, 3, -1, -1]
