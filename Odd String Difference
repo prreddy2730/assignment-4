@@ -1,0 +1,31 @@
+def find_odd_string(words):
+    def to_diff_array(word):
+        return [ord(word[i + 1]) - ord(word[i]) for i in range(len(word) - 1)]
+
+    # Convert all words to their difference arrays
+    diff_arrays = [to_diff_array(word) for word in words]
+    
+    # We can use a dictionary to count the occurrences of each diff array
+    diff_count = {}
+    for diff in diff_arrays:
+        diff_tuple = tuple(diff)  # Tuples can be used as dictionary keys
+        if diff_tuple in diff_count:
+            diff_count[diff_tuple] += 1
+        else:
+            diff_count[diff_tuple] = 1
+    
+    # Find the unique diff array
+    unique_diff_array = None
+    for diff, count in diff_count.items():
+        if count == 1:
+            unique_diff_array = diff
+            break
+    
+    # Find and return the word that has the unique diff array
+    for i, diff in enumerate(diff_arrays):
+        if tuple(diff) == unique_diff_array:
+            return words[i]
+
+# Example usage
+words = ["adc", "wzy", "abc"]
+print(find_odd_string(words))  # Output: "abc"
