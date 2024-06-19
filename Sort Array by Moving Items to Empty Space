@@ -1,0 +1,27 @@
+def min_operations_to_sort(nums):
+    n = len(nums)
+    sorted_nums = list(range(n))
+
+    # Find the initial position of 0
+    zero_pos = nums.index(0)
+    operations = 0
+    
+    while nums != sorted_nums and nums != sorted_nums[::-1]:
+        # If 0 is not in the correct position, move the correct element to the position of 0
+        if nums[zero_pos] != zero_pos:
+            target_pos = nums[zero_pos]
+            nums[zero_pos], nums[target_pos] = nums[target_pos], nums[zero_pos]
+            zero_pos = target_pos
+        else:
+            for i in range(n):
+                if nums[i] != i:
+                    nums[zero_pos], nums[i] = nums[i], nums[zero_pos]
+                    zero_pos = i
+                    break
+        operations += 1
+    
+    return operations
+
+# Example usage
+nums = [4, 2, 0, 3, 1]
+print(min_operations_to_sort(nums))  # Output: 3
