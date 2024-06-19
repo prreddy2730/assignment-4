@@ -1,0 +1,20 @@
+def words_within_two_edits(queries, dictionary):
+    def can_match_with_two_edits(word1, word2):
+        count = 0
+        for c1, c2 in zip(word1, word2):
+            if c1 != c2:
+                count += 1
+            if count > 2:
+                return False
+        return count <= 2
+
+    result = []
+    for query in queries:
+        if any(can_match_with_two_edits(query, dict_word) for dict_word in dictionary):
+            result.append(query)
+    return result
+
+# Example usage
+queries = ["word", "note", "ants", "wood"]
+dictionary = ["wood", "joke", "moat"]
+print(words_within_two_edits(queries, dictionary))  # Output: ["word", "note", "wood"]
